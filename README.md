@@ -1,55 +1,101 @@
-# React + TypeScript + Vite
+# Lightning Launchpad
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive Lightning Network onboarding experience that connects to Lightning Labs' LND API to help new users understand and use the Lightning Network. This project was created for the Accra Lightning Bootcamp hackathon.
 
-Currently, two official plugins are available:
+## Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Lightning Launchpad addresses a critical barrier to Lightning Network adoption: technical complexity. By providing clear visual explanations and a guided setup process that connects to real Lightning Network data, we make Lightning more accessible to everyone.
 
-## Expanding the ESLint configuration
+### Key Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Interactive Visual Explainer**
+   - Animated illustrations of Lightning channels
+   - Network routing visualization using real Lightning Network data
+   - Simple explanations of complex concepts
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+2. **Lightning Labs API Integration**
+   - Connects to Lightning Labs' LND REST API
+   - Fetches real network statistics and node data
+   - Recommends nodes for connections based on network data
+
+3. **Guided Setup Assistant**
+   - Step-by-step wallet connection flow
+   - Funding recommendations based on actual network averages
+   - Channel setup guidance with real node suggestions
+
+## Technical Implementation
+
+### Lightning Labs API Integration
+
+This project connects to the Lightning Network via Lightning Labs' LND REST API. We use the following endpoints:
+
+- `/v1/getinfo` - Get node information
+- `/v1/channels` - List active channels
+- `/v1/channels/pending` - List pending channels
+- `/v1/graph/info` - Get network information
+- `/v1/graph/node/{pubkey}` - Get detailed node information
+- `/v1/balance/blockchain` - Get on-chain wallet balance
+- `/v1/balance/channels` - Get channel balances
+
+For the hackathon, we've implemented a "demo mode" that simulates the API responses but can easily be switched to use a real LND node.
+
+### Architecture
+
+- **Frontend**: React + TypeScript + Tailwind CSS
+- **API Integration**: Custom hooks and context providers
+- **State Management**: React Context API
+- **Visualization**: Framer Motion for animations
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14+)
+- npm or yarn
+- (Optional) Access to an LND node for full functionality
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/lightning-launchpad.git
+cd lightning-launchpad
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+2. Install dependencies
+```bash
+npm install
+# or
+yarn
 ```
-# lightning-launchpad
+
+3. Start the development server
+```bash
+npm start
+# or
+yarn start
+```
+3. Run the project in your browser
+```bash
+npm start
+
+### Connecting to Your LND Node (Optional)
+
+1. Start your LND node and ensure REST API is enabled
+2. Get your admin.macaroon file and convert it to hex format:
+   ```
+   xxd -ps -u -c 1000 admin.macaroon
+   ```
+3. In the Connection Setup screen, disable demo mode and enter:
+   - Your LND REST API URL (e.g., https://localhost:8080)
+   - Your macaroon in hex format
+
+## Demo Mode
+
+For the hackathon, the app starts in demo mode by default, which simulates LND API responses. This allows you to explore the full functionality without needing a real Lightning node.
+
+## Learn More about Lightning Network
+
+- [Lightning Labs Documentation](https://docs.lightning.engineering/)
+- [LND API Documentation](https://api.lightning.community/)
+- [Lightning Network Specification](https://github.com/lightning/bolts)
