@@ -75,9 +75,6 @@ npm start
 # or
 yarn start
 ```
-3. Run the project in your browser
-```bash
-npm start
 
 ### Connecting to Your LND Node (Optional)
 

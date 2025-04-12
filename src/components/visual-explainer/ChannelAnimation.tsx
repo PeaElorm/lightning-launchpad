@@ -17,7 +17,7 @@ const ChannelAnimation: React.FC = () => {
 
   // Handle state transitions
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: ReturnType<typeof setTimeout>;
     
     if (channelState === ChannelState.OPENING) {
       setExplanation('Opening a channel requires an on-chain Bitcoin transaction. This transaction locks funds that both parties can use for payments.');
